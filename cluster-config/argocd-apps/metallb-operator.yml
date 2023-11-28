@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lvm-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+      path: cluster-config/install-metallb/operator
+      #directory:
+      #  recurse: true
+      kustomize:
+        version: v5.1.0
+  project: local-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      # selfHeal: false # overrides changes made on the cluster that drift from git state

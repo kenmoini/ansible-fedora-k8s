@@ -1,0 +1,24 @@
+---
+# This ArgoCD Application is used to load in all the other ArgoCD Applications that are used to manage the cluster
+# It will sync down the argocd-apps directory and all manifests within, which are atomic Applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-local-cluster
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+    targetRevision: main
+    path: cluster-config/argocd-apps
+    #directory:
+    #  recurse: true
+    kustomize:
+      version: v5.1.0
+  project: local-cluster
+  syncPolicy:
+    automated:
+      #prune: true
+      allowEmpty: true
+      selfHeal: true # overrides changes made on the cluster that drift from git state

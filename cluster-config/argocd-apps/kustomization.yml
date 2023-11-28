@@ -5,6 +5,4 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-  - project.yml
-  - repo.yml
-  - app-of-apps.yml
+  - metallb-operator.yml
