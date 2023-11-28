@@ -56,16 +56,7 @@ spec:
       tls:
         termination: edge
         insecureEdgeTerminationPolicy: Redirect
-  sso:
-    dex:
-      resources:
-        limits:
-          cpu: 500m
-          memory: 256Mi
-        requests:
-          cpu: 250m
-          memory: 128Mi
-    provider: dex
+  sso: {}
   applicationSet:
     resources:
       limits:

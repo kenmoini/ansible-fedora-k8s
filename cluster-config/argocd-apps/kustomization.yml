@@ -6,5 +6,5 @@ namespace: argocd
 
 resources:
   - system-operators.yml
-  - metallb-operator.yml
-  - metallb-instance.yml
+  #- metallb-operator.yml
+  #- metallb-instance.yml
