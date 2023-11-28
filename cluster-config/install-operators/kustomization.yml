@@ -1,0 +1,8 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://operatorhub.io/install/cert-manager.yaml
+  - https://operatorhub.io/install/stable/external-secrets-operator.yaml
+  - https://operatorhub.io/install/prometheus.yaml
