@@ -1,0 +1,26 @@
+---
+### Allows GitOps to create pretty much anything in the cluster
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argocd-cluster-admin
+subjects:
+  #- kind: ServiceAccount
+  #  name: default
+  #  namespace: argocd
+  - kind: ServiceAccount
+    name: argocd-argocd-application-controller
+    namespace: argocd
+  - kind: ServiceAccount
+    name: argocd-applicationset-controller
+    namespace: argocd
+  #- kind: ServiceAccount
+  #  name: argocd-argocd-dex-server
+  #  namespace: argocd
+  - kind: ServiceAccount
+    name: argocd-argocd-server
+    namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin

@@ -8,3 +8,4 @@ resources:
   - project.yml
   - repo.yml
   - app-of-apps.yml
+  - rbac.yml
