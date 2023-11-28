@@ -15,7 +15,7 @@ spec:
     - chart: kubernetes-dashboard
       helm: {}
       repoURL: 'https://kubernetes.github.io/dashboard/'
-      #targetRevision: 1.0.2
+      targetRevision: 6.0.8
   syncPolicy:
     automated:
       allowEmpty: true
