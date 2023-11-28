@@ -6,5 +6,6 @@ namespace: argocd
 
 resources:
   - system-operators.yml
+  - kubernetes-dashboard.yml
   #- metallb-operator.yml
   #- metallb-instance.yml

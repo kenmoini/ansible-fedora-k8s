@@ -1,0 +1,101 @@
+controller:
+  # affinity: {}
+  logLevel: 1
+  ingressClass:
+    name: nginx
+  includeYear: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  enableCertManager: false
+  hostNetwork: false
+  enableLatencyMetrics: false
+  setAsDefaultIngress: false
+  terminationGracePeriodSeconds: 30
+  nginxStatus:
+    allowCidrs: 127.0.0.1
+    enable: true
+    port: 8080
+  nginxReloadTimeout: 60000
+  healthStatus: false
+  appprotect:
+    enable: false
+  minReadySeconds: 1
+  disableIPV6: false
+  enableCustomResources: true
+  globalConfiguration:
+    create: false
+    spec: {}
+  reportIngressStatus:
+    annotations: {}
+    enable: true
+    enableLeaderElection: true
+    ingressLink: ''
+  kind: deployment
+  #kind: daemonset
+  enablePreviewPolicies: false
+  service:
+    externalIPs: []
+    customPorts: []
+    loadBalancerIP: ''
+    annotations:
+      metallb.universe.tf/address-pool: doc-example
+    externalTrafficPolicy: Local
+    httpPort:
+      enable: true
+      port: 80
+      targetPort: 80
+    httpsPort:
+      enable: true
+      port: 443
+      targetPort: 443
+    loadBalancerSourceRanges: []
+    extraLabels: {}
+    type: LoadBalancer
+    create: true
+  readyStatus:
+    enable: true
+    initialDelaySeconds: 0
+    port: 8081
+  replicaCount: 1
+  autoscaling:
+    annotations: {}
+    enabled: false
+    maxReplicas: 3
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+  enableSnippets: false
+  nginxDebug: false
+  appprotectdos:
+    debug: false
+    enable: false
+    maxDaemons: 0
+    maxWorkers: 0
+    memory: 0
+  image:
+    pullPolicy: IfNotPresent
+    repository: nginx/nginx-ingress
+    tag: 3.2.0-ubi
+  dnsPolicy: ClusterFirst
+  enableExternalDNS: false
+  enableTLSPassthrough: false
+  enableOIDC: false
+  healthStatusURI: /nginx-health
+  volumeMounts: 
+  - name: trusted-ca
+    mountPath: /etc/pki/tls/certs/cert-manager-tls-ca-bundle.crt
+    subPath: ca-bundle.crt
+  volumes:
+  - name: trusted-ca
+    configMap:
+      name: trusted-ca
+      defaultMode: 420
+prometheus:
+  create: true
+  port: 9113
+  scheme: http
+rbac:
+  create: true
+readOnlyRootFilesystem: false
