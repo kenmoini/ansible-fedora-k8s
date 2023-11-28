@@ -1,0 +1,36 @@
+---
+- name: Create the 99-crio-network.conf file
+  ansible.builtin.template:
+    src: 99-crio-network.conf.j2
+    dest: /etc/modules-load.d/99-crio-network.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Load the overlay and br_netfilter kernel modules
+  ansible.builtin.modprobe:
+    name: "{{ item }}"
+  loop:
+    - overlay
+    - br_netfilter
+
+- name: Create the /etc/sysctl.d/99-k8s.conf file
+  ansible.builtin.template:
+    src: 99-k8s.conf.j2
+    dest: /etc/sysctl.d/99-k8s.conf
+    owner: root
+    group: root
+    mode: 0644
+  register: sysctl_templating
+
+- name: Reload sysctl
+  when: sysctl_templating is changed
+  ansible.builtin.command: sysctl --system
+
+- name: Create the kubernetes repo file
+  ansible.builtin.template:
+    src: kubernetes.repo.j2
+    dest: /etc/yum.repos.d/kubernetes.repo
+    owner: root
+    group: root
+    mode: 0644

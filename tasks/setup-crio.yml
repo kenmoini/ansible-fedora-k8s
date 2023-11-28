@@ -1,0 +1,19 @@
+---
+- name: Install the CRI-O package
+  ansible.builtin.dnf:
+    name: cri-o
+    state: present
+  tags: install-crio
+
+- name: Install the containernetworking-plugins package
+  ansible.builtin.dnf:
+    name: containernetworking-plugins
+    state: present
+  tags: install-crio
+
+- name: Start and enable the CRI-O service
+  ansible.builtin.service:
+    name: crio
+    state: started
+    enabled: true
+  tags: install-crio

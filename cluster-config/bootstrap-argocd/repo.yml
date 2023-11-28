@@ -1,0 +1,15 @@
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: repo-ocp4-gitops-config
+  labels:
+    argocd.argoproj.io/secret-type: repository
+  annotations:
+    managed-by: argocd.argoproj.io
+stringData:
+  name: kemo-labs-k8s
+  project: local-cluster
+  type: git
+  url: https://github.com/kenmoini/ansible-fedora-k8s.git
+type: Opaque

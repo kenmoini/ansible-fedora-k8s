@@ -1,0 +1,86 @@
+---
+- name: Check to see if the cluster config file exists
+  ansible.builtin.stat:
+    path: /etc/kubernetes/cluster-config.yml
+  register: cluster_config
+
+- name: Template the init configs
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER' and cluster_config.stat.exists == false
+  ansible.builtin.template:
+    src: cluster-config.yml.j2
+    dest: /etc/kubernetes/cluster-config.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Run preflight - pull images
+  ansible.builtin.command: kubeadm config images pull
+
+- name: Initialize the cluster
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.command: kubeadm init --config /etc/kubernetes/cluster-config.yml --upload-certs
+  args:
+    creates: /etc/kubernetes/admin.conf
+  register: kubeadm_init
+
+- name: Save the output of the initialization to a file
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER' and kubeadm_init is changed
+  ansible.builtin.copy:
+    content: "{{ kubeadm_init.stdout_lines | join('\n') }}"
+    dest: /root/kubeadm-init.out
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Read in the kubeadm-init.out file for the control plane join command
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.shell:
+    cmd: grep '\--control-plane' -B2 /root/kubeadm-init.out
+  register: kubeadm_init_read_cp
+
+- name: Read in the kubeadm-init.out file for the app node join command
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.shell:
+    cmd: grep 'kubeadm join' -A2 /root/kubeadm-init.out | tail -n2
+  register: kubeadm_init_read_app
+
+- name: Create a dummy inventory host to house the join commands
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.add_host:
+    name: join-command
+    cp_join_command: "{{ kubeadm_init_read_cp.stdout_lines | join('') | replace('\t', '') | regex_replace('\\\\', '') }} --apiserver-bind-port={{ k8s_api_port }}"
+    appnode_join_command: "{{ kubeadm_init_read_app.stdout_lines | join('') | replace('\t', '') | regex_replace('\\\\', '') }}"
+
+- name: Debug the join command
+  ansible.builtin.debug:
+    msg: "{{ hostvars['join-command']['cp_join_command'] }}"
+
+- name: Debug the join command
+  ansible.builtin.debug:
+    msg: "{{ hostvars['join-command']['appnode_join_command'] }}"
+
+- name: Wait until the Kube API pods are scheduled
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.shell: kubectl get pods -n kube-system -l component=kube-apiserver | wc -l
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  register: kube_apiserver_pods
+  until: kube_apiserver_pods.stdout >= "2"
+  retries: 60
+  delay: 10
+
+- name: Wait until the Kube API pods are ready
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.shell: kubectl wait --for=condition=ready pod -n kube-system -l component=kube-apiserver --timeout=120s
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  register: kube_apiserver_pods
+  until: "{{ 'condition met' in kube_apiserver_pods.stdout }}"
+  retries: 60
+  delay: 10
+
+- name: Remove taints from the nodes
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf

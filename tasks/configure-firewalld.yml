@@ -1,0 +1,95 @@
+---
+
+- name: Enable the FirewallD service
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+#- name: Create the internal zone
+#  ansible.posix.firewalld:
+#    zone: internal
+#    state: present
+#    permanent: true
+
+- name: Reload FirewallD
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
+
+- name: Add the base interface to the internal zone
+  ansible.posix.firewalld:
+    zone: public
+    interface: "{{ keepalived_interface }}"
+    permanent: true
+    state: enabled
+
+- name: Reload FirewallD
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
+
+- name: Add the sources to the internal zone
+  ansible.posix.firewalld:
+    #zone: public
+    source: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop:
+    - 192.168.0.0/16
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+
+- name: Setup basic FirewallD Services
+  ansible.posix.firewalld:
+    #zone: public
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop:
+    - cockpit
+    - dns
+    - http
+    - https
+    - ssh
+
+- name: Setup FirewallD Services for Kubernetes
+  ansible.posix.firewalld:
+    #zone: public
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+  loop:
+    - 1936/tcp
+    - "{{ haproxy_api_port }}/tcp"
+    - "{{ k8s_api_port }}/tcp"
+    - 2379-2380/tcp
+    - 179/tcp
+    - 4789/udp
+    - 5473/tcp
+    - 51820-51821/udp
+    - 8472/udp
+    - 8080/tcp
+    - 9000-9999/tcp
+    - 9000-9999/udp
+    - 10248-10259/tcp
+    - 30000-32767/tcp
+    - 30000-32767/udp
+
+- name: Enable masquerading
+  ansible.posix.firewalld:
+    #zone: public
+    masquerade: true
+    state: enabled
+    permanent: true
+
+- name: Reload FirewallD
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
+
+- name: fuck it, disable the firewall
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+    enabled: false

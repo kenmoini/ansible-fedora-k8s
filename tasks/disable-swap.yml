@@ -1,0 +1,11 @@
+---
+- name: Disable swap by removing the zram package
+  ansible.builtin.dnf:
+    name: zram-generator-defaults
+    state: absent
+  tags: disable-swap
+  register: swap_disabled
+
+- name: Restart systems if swap was disabled
+  when: swap_disabled is changed
+  ansible.builtin.reboot:

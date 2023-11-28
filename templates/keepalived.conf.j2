@@ -1,0 +1,31 @@
+! /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+global_defs {
+    router_id LVS_DEVEL
+    enable_script_security
+}
+vrrp_script check_apiserver {
+  script "/etc/keepalived/check_apiserver.sh"
+  interval 3
+  weight -2
+  fall 10
+  rise 2
+}
+
+vrrp_instance VI_1 {
+    state {{ hostvars[inventory_hostname].keepalived_role }}
+    interface {{ keepalived_interface }}
+    virtual_router_id {{ keepalived_virtual_router_id }}
+    priority {% if hostvars[inventory_hostname].keepalived_role == "MASTER" %}150{% else %}100{% endif %}
+
+    authentication {
+        auth_type PASS
+        auth_pass {{ keepalived_virtual_router_id }}
+    }
+    virtual_ipaddress {
+        {{ cluster_load_balancer_ip }}
+    }
+    track_script {
+        check_apiserver
+    }
+}

@@ -1,0 +1,55 @@
+---
+- name: Uninstall Kubernetes from Fedora
+  hosts: cluster
+  become: true
+
+  vars:
+    remove_packages: false
+
+  tasks:
+    - name: Run the kubeadm reset command
+      ansible.builtin.command: kubeadm reset --force
+        
+    - name: Remove the cluster-config.yml file
+      ansible.builtin.file:
+        path: /etc/kubernetes/cluster-config.yml
+        state: absent
+
+    - name: Find all files in the /etc/cni/net.d directory
+      ansible.builtin.find:
+        paths: /etc/cni/net.d
+        file_type: file
+      register: cni_files
+
+    - name: Remove the CNI configuration files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ cni_files.files }}"
+
+    - name: Remove the Kubernetes packages
+      when: remove_packages
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: absent
+        disable_excludes: kubernetes
+      loop:
+        - kubernetes-master
+        - kubernetes-kubeadm
+        - kubernetes-client
+        - kubernetes-node
+
+    - name: Remove the CRI-O package
+      when: remove_packages
+      ansible.builtin.dnf:
+        name: cri-o
+        state: absent
+
+    - name: Remove the containernetworking-plugins package
+      when: remove_packages
+      ansible.builtin.dnf:
+        name: containernetworking-plugins
+        state: absent
+
+    - name: Reboot the nodes
+      ansible.builtin.reboot:

@@ -1,0 +1,141 @@
+---
+- name: Deploy a Kubernetes cluster to some Fedora Hosts
+  hosts: cluster
+  become: true
+
+  vars:
+    kubernetes_version: "1.27"
+    kubernetes_version_long: "1.27.0"
+
+    cluster_name: k8s
+    cluster_domain: kemo.labs
+
+    k8s_api_port: 8443
+    haproxy_api_port: 6443
+    cluster_load_balancer_ip: 192.168.42.60
+    pod_network: 10.244.0.0/16
+
+    calico_version: v3.26.4
+    olm_version: v0.26.0
+
+    update_system: false
+    disable_bluetooth: true
+
+    keepalived_virtual_router_id: 42
+    keepalived_interface: enp1s0
+
+    operators:
+    - https://operatorhub.io/install/argocd-operator.yaml
+    - https://operatorhub.io/install/metallb-operator.yaml
+    - https://operatorhub.io/install/cert-manager.yaml
+    - https://operatorhub.io/install/stable/external-secrets-operator.yaml
+    - https://operatorhub.io/install/prometheus.yaml
+
+
+  tasks:
+
+    - name: Perform basic node setup
+      ansible.builtin.include_tasks:
+        file: tasks/basic-node-setup.yml
+        apply:
+          tags:
+            - basic-node-setup
+
+    - name: Setup cockpit
+      ansible.builtin.include_tasks:
+        file: tasks/setup-cockpit.yml
+        apply:
+          tags:
+            - setup-cockpit
+
+    - name: Disable swap
+      ansible.builtin.include_tasks:
+        file: tasks/disable-swap.yml
+        apply:
+          tags:
+            - disable-swap
+
+    - name: Disable bluetooth
+      when: disable_bluetooth
+      ansible.builtin.include_tasks:
+        file: tasks/disable-bluetooth.yml
+        apply:
+          tags:
+            - disable-bluetooth
+
+    - name: Disable wireless
+      ansible.builtin.include_tasks:
+        file: tasks/disable-wireless.yml
+        apply:
+          tags:
+            - disable-wireless
+
+    - name: Configure DNS
+      ansible.builtin.include_tasks:
+        file: tasks/configure-dns.yml
+        apply:
+          tags:
+            - configure-dns
+
+    - name: Configure FirewallD
+      ansible.builtin.include_tasks:
+        file: tasks/configure-firewalld.yml
+        apply:
+          tags:
+            - configure-firewalld
+
+    - name: Setup system configuration
+      ansible.builtin.include_tasks:
+        file: tasks/setup-configuration.yml
+        apply:
+          tags:
+            - setup-configuration
+
+    - name: Install container runtime - CRI-O
+      ansible.builtin.include_tasks:
+        file: tasks/setup-crio.yml
+        apply:
+          tags:
+            - setup-crio
+
+    - name: Install Kubernetes packages
+      ansible.builtin.include_tasks:
+        file: tasks/install-kubernetes.yml
+        apply:
+          tags:
+            - install-kubernetes
+    
+    - name: Template the Static Pods for the load balancer
+      ansible.builtin.include_tasks:
+        file: tasks/setup-static-lb-pods.yml
+        apply:
+          tags:
+            - setup-static-lb-pods
+
+    - name: Template the Kubernetes configuration file and set up the cluster
+      ansible.builtin.include_tasks:
+        file: tasks/setup-kube-init-config.yml
+        apply:
+          tags:
+            - setup-kube-init-config
+
+    - name: Configure the CNI - Calico
+      ansible.builtin.include_tasks:
+        file: tasks/configure-cni.yml
+        apply:
+          tags:
+            - configure-cni
+
+    - name: Join the control plane nodes
+      ansible.builtin.include_tasks:
+        file: tasks/join-control-plane.yml
+        apply:
+          tags:
+            - join-control-plane
+
+    - name: Install OLM
+      ansible.builtin.include_tasks:
+        file: tasks/install-olm.yml
+        apply:
+          tags:
+            - install-olm

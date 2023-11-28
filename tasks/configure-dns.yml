@@ -1,0 +1,41 @@
+---
+- name: Disable the systemd-resolved service
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+  tags: configure-dns
+  register: systemd_resolved
+
+- name: Reset the DNS resolve conf
+  when: systemd_resolved.changed
+  block:
+    - name: Remove the symlink for resolv.conf
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: absent
+      tags: configure-dns
+
+    - name: Touch the resolv.conf file
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: touch
+        mode: 0644
+
+- name: Make sure the NetworkManager configuration file uses the default dns driver
+  ansible.builtin.lineinfile:
+    path: /etc/NetworkManager/NetworkManager.conf
+    regexp: ^dns=
+    line: dns=default
+    state: present
+    insertafter: ^\[main\]
+    backup: yes
+  tags: configure-dns
+  register: dns_driver
+
+- name: Restart the NetworkManager service
+  when: dns_driver.changed
+  ansible.builtin.service:
+    name: NetworkManager
+    state: restarted
+  tags: configure-dns

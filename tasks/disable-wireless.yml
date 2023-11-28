@@ -1,0 +1,13 @@
+---
+- name: Create the disable-wireless.conf modprobe.d file
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/disable-wireless.conf
+    content: "blacklist iwlwifi"
+    owner: root
+    group: root
+    mode: 0644
+  register: modprobe_templating
+
+- name: Reboot node if the file is changed
+  when: modprobe_templating is changed
+  ansible.builtin.reboot:

@@ -1,0 +1,15 @@
+---
+
+- name: Join the control plane nodes to the cluster
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'BACKUP'
+  throttle: 1
+  ansible.builtin.shell: "{{ hostvars['join-command']['cp_join_command'] }} --apiserver-bind-port={{ k8s_api_port }}"
+  args:
+    creates: /etc/kubernetes/admin.conf
+
+- name: Remove taints from the nodes
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.command: kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  ignore_errors: true

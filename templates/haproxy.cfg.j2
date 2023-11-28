@@ -1,0 +1,64 @@
+global
+    log         127.0.0.1 local2
+    chroot      /var/lib/haproxy
+    pidfile     /var/lib/haproxy/haproxy.pid
+    maxconn     40000
+    stats       socket /var/lib/haproxy/admin.sock mode 660 level admin
+    stats       timeout 10s
+
+    # utilize system-wide crypto-policies
+    #ssl-default-bind-ciphers PROFILE=SYSTEM
+    #ssl-default-server-ciphers PROFILE=SYSTEM
+
+defaults
+    mode                    tcp
+    log                     global
+    option                  tcplog
+    option                  dontlognull
+    option http-server-close
+    option                  redispatch
+    retries                 3
+    timeout http-request    30s
+    timeout queue           1m
+    timeout connect         30s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 30s
+    timeout check           30s
+    maxconn                 3000
+
+listen stats
+    bind    *:1936
+    mode    http
+    log     global
+    maxconn 10
+    stats   enable
+    stats   hide-version
+    stats   refresh         10s
+    stats   show-legends
+    stats   show-node
+    stats   auth            admin:admin
+    stats   uri             /stats
+    stats   realm           HAProxy\ Statistics
+    timeout connect         30s
+    timeout client          30s
+    timeout server          30s
+
+frontend api
+    bind {{ cluster_load_balancer_ip }}:{{ haproxy_api_port }}
+    mode tcp
+    option tcplog
+    default_backend controlplaneapi
+
+backend controlplaneapi
+    option httpchk GET /healthz
+    http-check expect status 200
+    mode tcp
+    option tcplog
+    option tcp-check
+    balance roundrobin
+    default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
+{% for node in play_hosts %}
+    server {{ node }} {{ hostvars[node].ansible_host }}:{{ k8s_api_port }} check{% if hostvars[inventory_hostname]['keepalived_role'] != 'MASTER' %} backup{% endif %}
+
+{% endfor %}

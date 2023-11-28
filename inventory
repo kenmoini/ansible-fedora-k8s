@@ -1,0 +1,21 @@
+cluster:
+  children:
+    controlplane:
+
+controlplane:
+  hosts:
+    k8s-1.kemo.labs:
+      ansible_host: 192.168.42.61
+      ansible_user: root
+      node_name: k8s-1
+      keepalived_role: MASTER
+    k8s-2.kemo.labs:
+      ansible_host: 192.168.42.62
+      ansible_user: root
+      node_name: k8s-2
+      keepalived_role: BACKUP
+    k8s-3.kemo.labs:
+      ansible_host: 192.168.42.63
+      ansible_user: root
+      node_name: k8s-3
+      keepalived_role: BACKUP

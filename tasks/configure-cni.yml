@@ -1,0 +1,36 @@
+---
+- name: Install Calico CNI
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  block:
+    - name: Download the Calico Operator
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/projectcalico/calico/{{ calico_version }}/manifests/tigera-operator.yaml"
+        dest: /etc/kubernetes/tigera-operator.yaml
+        mode: '0644'
+
+    - name: Template the Calico Instance
+      ansible.builtin.template:
+        src: templates/calico-instance.yml.j2
+        dest: /etc/kubernetes/tigera-operator-instance.yaml
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Apply the Calico Operator
+      ansible.builtin.command: kubectl create -f /etc/kubernetes/tigera-operator.yaml
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
+
+    - name: Wait for the Calico Operator to be ready
+      ansible.builtin.command: kubectl get pods -n tigera-operator -l name=tigera-operator --no-headers -o custom-columns=":status.phase"
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
+      register: tigera_operator_status
+      until: tigera_operator_status.stdout == 'Running'
+      retries: 60
+      delay: 10
+
+    - name: Apply the Calico Instance
+      ansible.builtin.command: kubectl create -f /etc/kubernetes/tigera-operator-instance.yaml
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf

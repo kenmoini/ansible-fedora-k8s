@@ -1,0 +1,53 @@
+---
+- name: Make needed directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /etc/keepalived
+    - /etc/haproxy
+    - /etc/kubernetes/manifests
+
+- name: Template the keepalived check file
+  ansible.builtin.template:
+    src: keepalived-check.sh.j2
+    dest: /etc/keepalived/check_apiserver.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Template the keepalived.conf file
+  ansible.builtin.template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Template the HAProxy config file
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Template the Keepalived Static Pod
+  ansible.builtin.template:
+    src: pod-keepalived.yml.j2
+    dest: /etc/kubernetes/manifests/keepalived-static-pod.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Template the HAProxy Static Pod
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  ansible.builtin.template:
+    src: pod-haproxy.yml.j2
+    dest: /etc/kubernetes/manifests/haproxy-static-pod.yml
+    owner: root
+    group: root
+    mode: 0644

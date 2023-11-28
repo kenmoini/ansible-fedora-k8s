@@ -1,0 +1,8 @@
+---
+- name: Disable the bluetooth service
+  ansible.builtin.service:
+    name: bluetooth
+    state: stopped
+    enabled: false
+  tags:
+    - disable-bluetooth

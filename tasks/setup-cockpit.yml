@@ -1,0 +1,14 @@
+---
+- name: Enable the cockpit service
+  ansible.builtin.service:
+    name: cockpit
+    state: started
+    enabled: true
+
+- name: Enable root login for cockpit
+  ansible.builtin.lineinfile:
+    path: /etc/cockpit/disallowed-users
+    regexp: ^root
+    line: '#AllowRoot'
+    state: present
+    backup: yes

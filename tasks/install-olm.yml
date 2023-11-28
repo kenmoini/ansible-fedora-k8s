@@ -1,0 +1,16 @@
+---
+- name: Install the Operator Lifecycle Manager
+  when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
+  block:
+    - name: Install the Operator Lifecycle Manager
+      ansible.builtin.shell: curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/{{ olm_version }}/install.sh | bash -s {{ olm_version }}
+
+    #- name: Install Operators
+    #  ansible.builtin.command: kubectl apply -f {{ item }}
+    #  environment:
+    #    KUBECONFIG: /etc/kubernetes/admin.conf
+    #  loop: "{{ operators }}"
+    #  register: operator_install_status
+    #  until: operator_install_status.rc == 0
+    #  retries: 60
+    #  delay: 10

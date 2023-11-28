@@ -1,0 +1,6 @@
+#!/bin/bash
+
+kubeadm reset -f
+rm -f /etc/kubernetes/cluster-config.yml
+rm -f /etc/cni/net.d/*
+ipvsadm --clear
