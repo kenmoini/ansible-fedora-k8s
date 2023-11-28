@@ -6,4 +6,5 @@ namespace: metallb-system
 
 resources:
   - namespace.yml
+  - operatorgroup.yml
   - https://operatorhub.io/install/metallb-operator.yaml
