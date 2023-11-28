@@ -3,7 +3,7 @@
 - name: Join the control plane nodes to the cluster
   when: hostvars[inventory_hostname]['keepalived_role'] == 'BACKUP'
   throttle: 1
-  ansible.builtin.shell: "{{ hostvars['join-command']['cp_join_command'] }} --apiserver-bind-port={{ k8s_api_port }}"
+  ansible.builtin.shell: "{{ hostvars['join-command']['cp_join_command'] }} --apiserver-bind-port={{ k8s_api_port }} --cri-socket=unix:///var/run/crio/crio.sock"
   args:
     creates: /etc/kubernetes/admin.conf
 

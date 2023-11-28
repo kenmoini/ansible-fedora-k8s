@@ -4,6 +4,8 @@
   block:
     - name: Install the Operator Lifecycle Manager
       ansible.builtin.shell: curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/{{ olm_version }}/install.sh | bash -s {{ olm_version }}
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
 
     #- name: Install Operators
     #  ansible.builtin.command: kubectl apply -f {{ item }}

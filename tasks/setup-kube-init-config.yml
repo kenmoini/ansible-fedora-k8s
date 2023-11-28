@@ -48,7 +48,7 @@
   when: hostvars[inventory_hostname]['keepalived_role'] == 'MASTER'
   ansible.builtin.add_host:
     name: join-command
-    cp_join_command: "{{ kubeadm_init_read_cp.stdout_lines | join('') | replace('\t', '') | regex_replace('\\\\', '') }} --apiserver-bind-port={{ k8s_api_port }}"
+    cp_join_command: "{{ kubeadm_init_read_cp.stdout_lines | join('') | replace('\t', '') | regex_replace('\\\\', '') }} --apiserver-bind-port={{ k8s_api_port }} --cri-socket=unix:///var/run/crio/crio.sock"
     appnode_join_command: "{{ kubeadm_init_read_app.stdout_lines | join('') | replace('\t', '') | regex_replace('\\\\', '') }}"
 
 - name: Debug the join command
