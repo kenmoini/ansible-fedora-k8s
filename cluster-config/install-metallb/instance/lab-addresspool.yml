@@ -1,0 +1,10 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: lab-pool
+spec:
+  addresses:
+    - 192.168.42.2-192.168.42.100
+  autoAssign: false
+  #protocol: layer2

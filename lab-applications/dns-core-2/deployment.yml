@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-core-2
+spec:
+  selector:
+    matchLabels:
+      app: dns-core-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dns-core-2
+    spec:
+      containers:
+        - name: dns-core-2
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          image: quay.io/kenmoini/go-zones:file-to-bind-latest
+          ports:
+            - containerPort: 53
+            - containerPort: 5353
+          volumeMounts:
+            - name: dns-config
+              mountPath: /etc/go-zones
+            - name: server-config
+              mountPath: /opt/app-root/vendor/bind
+  volumes:
+    - name: server-config
+      configMap:
+        name: server-config
+    - name: dns-config
+      configMap:
+        name: dns-config

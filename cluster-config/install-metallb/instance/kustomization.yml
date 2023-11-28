@@ -5,5 +5,7 @@ kind: Kustomization
 namespace: metallb-system
 
 resources:
-  - instance.yml
-  - namespace.yml
+  #- namespace.yml
+  #- instance.yml
+  - lab-addresspool.yml
+  - lab-l2advertisement.yml
