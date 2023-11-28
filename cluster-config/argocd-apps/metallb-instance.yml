@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-instance
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+      path: cluster-config/install-metallb/instance
+      #directory:
+      #  recurse: true
+      kustomize:
+        version: v5.1.0
+  project: local-cluster
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
+    automated:
+      #prune: true
+      allowEmpty: true
+      # selfHeal: false # overrides changes made on the cluster that drift from git state

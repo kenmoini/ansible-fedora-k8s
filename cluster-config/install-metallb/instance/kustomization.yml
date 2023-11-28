@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: metallb-system
 
 resources:
-  - namespace.yml
+  - instance.yml
