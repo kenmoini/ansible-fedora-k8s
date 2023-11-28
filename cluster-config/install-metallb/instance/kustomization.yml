@@ -6,3 +6,4 @@ namespace: metallb-system
 
 resources:
   - instance.yml
+  - namespace.yml
