@@ -18,6 +18,8 @@ spec:
         version: v5.1.0
   project: local-cluster
   syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
     automated:
       prune: true
       allowEmpty: true
