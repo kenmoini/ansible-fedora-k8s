@@ -6,6 +6,6 @@ namespace: operators
 
 resources:
   - https://operatorhub.io/install/cert-manager.yaml
-  - https://operatorhub.io/install/metallb-operator.yaml
+  #- https://operatorhub.io/install/metallb-operator.yaml
   - https://operatorhub.io/install/stable/external-secrets-operator.yaml
   - https://operatorhub.io/install/prometheus.yaml
