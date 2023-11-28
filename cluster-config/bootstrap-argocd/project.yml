@@ -12,3 +12,5 @@ spec:
       server: '*'
   sourceRepos:
     - '*'
+  sourceNamespaces:
+  - '*'

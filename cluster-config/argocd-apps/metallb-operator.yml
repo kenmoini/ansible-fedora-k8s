@@ -6,8 +6,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
-  sourceNamespaces:
-  - metallb-system
   destination:
     server: 'https://kubernetes.default.svc'
   sources:
