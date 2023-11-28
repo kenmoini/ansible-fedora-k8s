@@ -19,7 +19,7 @@ spec:
   project: local-cluster
   syncPolicy:
     syncOptions:
-      - ServerSideApply=true
+      #- ServerSideApply=true
       - CreateNamespace=true
     automated:
       #prune: true
