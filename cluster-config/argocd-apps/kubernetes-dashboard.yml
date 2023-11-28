@@ -7,6 +7,13 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
+  ignoreDifferences:
+  - kind: Secret
+    name: kubernetes-dashboard-key-holder
+    namespace: kubernetes-dashboard
+    jsonPointers:
+    - /metadata
+    - /data
   destination:
     namespace: 'kubernetes-dashboard'
     server: https://kubernetes.default.svc
