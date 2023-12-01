@@ -12,9 +12,11 @@ spec:
     - port: 53
       protocol: TCP
       targetPort: 53
+      name: dns-tcp
     - port: 5353
       protocol: TCP
       targetPort: 5353
+      name: dns-tcp-alt
   selector:
     app: dns-core-2
   type: LoadBalancer
@@ -32,9 +34,11 @@ spec:
     - port: 53
       protocol: UDP
       targetPort: 53
+      name: dns-udp
     - port: 5353
       protocol: UDP
       targetPort: 5353
+      name: dns-udp-alt
   selector:
     app: dns-core-2
   type: LoadBalancer
