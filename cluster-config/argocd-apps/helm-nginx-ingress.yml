@@ -17,7 +17,7 @@ spec:
         valueFiles:
           - $values/cluster-config/helm-values/nginx-ingress.yml
       repoURL: 'https://helm.nginx.com/stable'
-      #targetRevision: 1.0.2
+      targetRevision: 1.0.2
     - ref: values
       repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
