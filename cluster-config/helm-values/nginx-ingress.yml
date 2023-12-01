@@ -11,7 +11,7 @@ controller:
   enableCertManager: false
   hostNetwork: false
   enableLatencyMetrics: false
-  setAsDefaultIngress: false
+  setAsDefaultIngress: true
   terminationGracePeriodSeconds: 30
   nginxStatus:
     allowCidrs: 0.0.0.0/0
@@ -34,6 +34,11 @@ controller:
     ingressLink: ''
   #kind: deployment
   kind: daemonset
+  replicaCount: 1
+  image:
+    pullPolicy: IfNotPresent
+    repository: nginx/nginx-ingress
+    tag: 3.2.0-ubi
   enablePreviewPolicies: false
   service:
     externalIPs: []
@@ -59,26 +64,21 @@ controller:
     enable: true
     initialDelaySeconds: 0
     port: 8081
-  replicaCount: 1
   autoscaling:
-    annotations: {}
     enabled: false
-    maxReplicas: 3
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 50
-    targetMemoryUtilizationPercentage: 50
+    #annotations: {}
+    #maxReplicas: 3
+    #minReplicas: 1
+    #targetCPUUtilizationPercentage: 50
+    #targetMemoryUtilizationPercentage: 50
   enableSnippets: false
   nginxDebug: false
   appprotectdos:
-    debug: false
     enable: false
-    maxDaemons: 0
-    maxWorkers: 0
-    memory: 0
-  image:
-    pullPolicy: IfNotPresent
-    repository: nginx/nginx-ingress
-    tag: 3.2.0-ubi
+    #debug: false
+    #maxDaemons: 0
+    #maxWorkers: 0
+    #memory: 0
   dnsPolicy: ClusterFirst
   enableExternalDNS: false
   enableTLSPassthrough: false
@@ -100,3 +100,25 @@ prometheus:
 rbac:
   create: true
 readOnlyRootFilesystem: false
+
+revisionHistoryLimit: 3
+
+defaultBackend:
+  ##
+  enabled: true
+  name: defaultbackend
+  image:
+    registry: quay.io
+    image: kenmoini/ingress-custom-error-pages
+    ## for backwards compatibility consider setting the full image url via the repository value below
+    ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
+    ## repository:
+    tag: "latest"
+    pullPolicy: IfNotPresent
+    runAsNonRoot: true
+    # nobody user -> uid 65534
+    runAsUser: 65534
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    readOnlyRootFilesystem: true
