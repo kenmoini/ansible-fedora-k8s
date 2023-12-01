@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
-      path: lab-applications/dns-core-2
+      path: lab-applications/dns-core/overlays/dns-core-2/
       #directory:
       #  recurse: true
       kustomize:
