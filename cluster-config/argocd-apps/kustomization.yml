@@ -6,7 +6,7 @@ namespace: argocd
 
 resources:
   - system-operators.yml
-  #- helm-nginx-ingress.yml
+  - helm-nginx-ingress.yml
   - kubernetes-dashboard.yml
   - dns-core-1.yml
   - dns-core-2.yml
