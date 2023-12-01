@@ -31,10 +31,10 @@ spec:
               mountPath: /etc/go-zones
             - name: server-config
               mountPath: /opt/app-root/vendor/bind
-  volumes:
-    - name: server-config
-      configMap:
-        name: server-config
-    - name: dns-config
-      configMap:
-        name: dns-config
+      volumes:
+        - name: server-config
+          configMap:
+            name: server-config
+        - name: dns-config
+          configMap:
+            name: dns-config
