@@ -14,7 +14,7 @@ controller:
   setAsDefaultIngress: false
   terminationGracePeriodSeconds: 30
   nginxStatus:
-    allowCidrs: 127.0.0.1
+    allowCidrs: 0.0.0.0/0
     enable: true
     port: 8080
   nginxReloadTimeout: 60000
@@ -32,15 +32,16 @@ controller:
     enable: true
     enableLeaderElection: true
     ingressLink: ''
-  kind: deployment
-  #kind: daemonset
+  #kind: deployment
+  kind: daemonset
   enablePreviewPolicies: false
   service:
     externalIPs: []
     customPorts: []
     loadBalancerIP: ''
     annotations:
-      metallb.universe.tf/address-pool: doc-example
+      metallb.universe.tf/address-pool: lab-pool
+      metallb.universe.tf/loadBalancerIPs: 192.168.42.68
     externalTrafficPolicy: Local
     httpPort:
       enable: true
@@ -83,15 +84,15 @@ controller:
   enableTLSPassthrough: false
   enableOIDC: false
   healthStatusURI: /nginx-health
-  volumeMounts: 
-  - name: trusted-ca
-    mountPath: /etc/pki/tls/certs/cert-manager-tls-ca-bundle.crt
-    subPath: ca-bundle.crt
-  volumes:
-  - name: trusted-ca
-    configMap:
-      name: trusted-ca
-      defaultMode: 420
+  #volumeMounts:
+  #- name: trusted-ca
+  #  mountPath: /etc/pki/tls/certs/cert-manager-tls-ca-bundle.crt
+  #  subPath: ca-bundle.crt
+  #volumes:
+  #- name: trusted-ca
+  #  configMap:
+  #    name: trusted-ca
+  #    defaultMode: 420
 prometheus:
   create: true
   port: 9113
