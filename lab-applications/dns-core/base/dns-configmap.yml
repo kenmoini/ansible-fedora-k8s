@@ -113,7 +113,7 @@ data:
                 value: 192.168.42.13/24
               - name: ntp
                 ttl: 6400
-                value: 192.168.42.48
+                value: 192.168.42.14
                 
               - name: pgsql
                 value: 192.168.42.15/24
