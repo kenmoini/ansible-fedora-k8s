@@ -22,6 +22,6 @@ spec:
       #- ServerSideApply=true
       #- CreateNamespace=true
     automated:
-      #prune: true
+      prune: true
       allowEmpty: true
       # selfHeal: false # overrides changes made on the cluster that drift from git state
