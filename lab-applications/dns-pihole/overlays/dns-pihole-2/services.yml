@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dns-pihole-2-tcp
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.42.12
+    metallb.universe.tf/address-pool: lab-pool
+    metallb.universe.tf/allow-shared-ip: "key-to-share-192.168.42.12"
+spec:
+  ports:
+    - port: 53
+      protocol: TCP
+      targetPort: 53
+      name: dns-tcp
+  selector:
+    app: dns-pihole-2
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dns-pihole-2-udp
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.42.12
+    metallb.universe.tf/address-pool: lab-pool
+    metallb.universe.tf/allow-shared-ip: "key-to-share-192.168.42.12"
+spec:
+  ports:
+    - port: 53
+      protocol: UDP
+      targetPort: 53
+      name: dns-udp
+  selector:
+    app: dns-pihole-2
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dns-pihole-2-tcp
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.42.12
+    metallb.universe.tf/address-pool: lab-pool
+    metallb.universe.tf/allow-shared-ip: "key-to-share-192.168.42.12"
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: dns-http
+  selector:
+    app: dns-pihole-2
+  type: ClusterIP

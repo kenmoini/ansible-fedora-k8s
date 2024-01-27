@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pihole-config
+data:
+  TZ: America/New_York
+  ADMIN_EMAIL: ken@kenmoini.com
+  TEMPERATUREUNIT: f
+  PIHOLE_DNS_: 208.67.220.220;208.67.222.222
+  DNSMASQ_USER: root
+  PIHOLE_UID: "0"

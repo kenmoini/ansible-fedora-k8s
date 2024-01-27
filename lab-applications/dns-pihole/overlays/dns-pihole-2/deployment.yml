@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-pihole-2
+spec:
+  selector:
+    matchLabels:
+      app: dns-pihole-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dns-pihole-2
+    spec:
+      containers:
+        - name: dns-pihole-2
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1G1
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          image: docker.io/pihole/pihole:latest
+          ports:
+            - containerPort: 53
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: pihole-config
+            - secretRef:
+                name: pihole-secrets
+          env:
+            - name: VIRTUAL_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
