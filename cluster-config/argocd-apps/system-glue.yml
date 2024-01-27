@@ -1,0 +1,28 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: system-glue
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+      path: lab-applications/system-glue/base/
+      #directory:
+      #  recurse: true
+      kustomize:
+        version: v5.1.0
+  project: local-cluster
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
+    automated:
+      #prune: true
+      allowEmpty: true
+      selfHeal: true # overrides changes made on the cluster that drift from git state

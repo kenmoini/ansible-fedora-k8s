@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-k8s-dash
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dashboard.apps.k8s.kemo.labs
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443

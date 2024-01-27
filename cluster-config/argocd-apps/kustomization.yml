@@ -10,5 +10,6 @@ resources:
   - kubernetes-dashboard.yml
   - dns-core-1.yml
   - dns-core-2.yml
+  - system-glue.yml
   #- metallb-operator.yml
   #- metallb-instance.yml
