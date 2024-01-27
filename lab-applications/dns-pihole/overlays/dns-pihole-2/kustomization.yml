@@ -8,3 +8,4 @@ resources:
   - namespace.yml
   - deployment.yml
   - services.yml
+  - ingress.yml
