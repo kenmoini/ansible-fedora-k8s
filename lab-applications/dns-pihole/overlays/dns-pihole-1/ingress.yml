@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-pihole-1
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: pihole-1.apps.k8s.kemo.labs
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: dns-pihole-1-web
+            port:
+              number: 80

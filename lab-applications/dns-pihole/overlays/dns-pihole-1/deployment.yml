@@ -15,10 +15,17 @@ spec:
     spec:
       containers:
         - name: dns-pihole-1
+          securityContext:
+            capabilities:
+              add:
+                - CHOWN
+                - NET_BIND_SERVICE
+                - NET_ADMIN
+                - SETFCAP
           resources:
             limits:
               cpu: 500m
-              memory: 1G1
+              memory: 1Gi
             requests:
               cpu: 250m
               memory: 512Mi
@@ -32,6 +39,8 @@ spec:
             - secretRef:
                 name: pihole-secrets
           env:
+            - name: ServerIP
+              value: 192.168.42.11
             - name: VIRTUAL_HOST
               valueFrom:
                 fieldRef:
