@@ -4,6 +4,8 @@ kind: Namespace
 metadata:
   name: dns-pihole-2
   labels:
+    app: dns-pihole-2
+    service: dns-pihole
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/audit: privileged
     pod-security.kubernetes.io/warn: privileged

@@ -3,6 +3,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-pihole-1
+  labels:
+    app: dns-pihole-1
+    service: dns-pihole
 spec:
   ingressClassName: nginx
   rules:

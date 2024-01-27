@@ -3,6 +3,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dns-pihole-1-tcp
+  labels:
+    app: dns-pihole-1
+    service: dns-pihole
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.42.11
     metallb.universe.tf/address-pool: lab-pool
@@ -21,6 +24,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dns-pihole-1-udp
+  labels:
+    app: dns-pihole-1
+    service: dns-pihole
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.42.11
     metallb.universe.tf/address-pool: lab-pool
@@ -39,6 +45,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dns-pihole-1-web
+  labels:
+    app: dns-pihole-1
+    service: dns-pihole
 spec:
   ports:
     - port: 80

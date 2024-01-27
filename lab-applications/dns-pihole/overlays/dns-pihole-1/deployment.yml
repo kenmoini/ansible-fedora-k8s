@@ -3,16 +3,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dns-pihole-1
+  labels:
+    app: dns-pihole-1
+    service: dns-pihole
 spec:
   selector:
     matchLabels:
       app: dns-pihole-1
+      service: dns-pihole
   replicas: 1
   template:
     metadata:
       labels:
         app: dns-pihole-1
+        service: dns-pihole
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "service"
+                    operator: In
+                    values:
+                      - dns-pihole
+              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: dns-pihole-1
           securityContext:
