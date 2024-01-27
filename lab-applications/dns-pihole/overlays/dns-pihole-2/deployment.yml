@@ -38,6 +38,8 @@ spec:
             - secretRef:
                 name: pihole-secrets
           env:
+            - name: ServerIP
+              value: 192.168.42.12
             - name: VIRTUAL_HOST
               valueFrom:
                 fieldRef:
