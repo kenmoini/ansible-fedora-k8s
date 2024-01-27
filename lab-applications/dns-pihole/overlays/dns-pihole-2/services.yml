@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dns-pihole-2-tcp
+  name: dns-pihole-2-web
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.42.12
     metallb.universe.tf/address-pool: lab-pool
