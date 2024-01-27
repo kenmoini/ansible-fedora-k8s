@@ -4,7 +4,7 @@ kind: Kustomization
 
 namespace: operators
 
-resources:
+#resources:
   #- https://operatorhub.io/install/cert-manager.yaml
   #- https://operatorhub.io/install/metallb-operator.yaml
   #- https://operatorhub.io/install/stable/external-secrets-operator.yaml
