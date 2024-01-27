@@ -28,6 +28,7 @@ spec:
                     values:
                       - dns-pihole
               topologyKey: "kubernetes.io/hostname"
+              namespaceSelector: {}
       containers:
         - name: dns-pihole-1
           securityContext:
