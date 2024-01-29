@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ingress-argocd.yml
   - ingress-k8s-dashboard.yml
+  - storageclass-bulk-ssd.yml

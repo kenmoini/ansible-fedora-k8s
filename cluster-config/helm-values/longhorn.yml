@@ -5,3 +5,6 @@ ingress:
 
 helmPreUpgradeCheckerJob:
   enabled: false
+
+persistence:
+  defaultClass: false
