@@ -4,7 +4,7 @@ kind: Application
 metadata:
   name: dns-pihole-1
   annotations:
-    argocd.argoproj.io/sync-wave: "15"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
     server: 'https://kubernetes.default.svc'

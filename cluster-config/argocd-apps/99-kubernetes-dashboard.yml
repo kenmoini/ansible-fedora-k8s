@@ -5,7 +5,7 @@ metadata:
   name: kubernetes-dashboard
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "99"
 spec:
   ignoreDifferences:
   - kind: Secret

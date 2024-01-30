@@ -6,16 +6,17 @@ namespace: argocd
 
 resources:
   - system-operators.yml
-  - helm-nginx-ingress.yml
-  - helm-longhorn.yml
-  - kubernetes-dashboard.yml
-  - lab-pdns-mysql.yml
+  - 00-helm-longhorn.yml
+  - 00-helm-nginx-ingress.yml
+  - 01-system-glue.yml
+  - 02-helm-vault.yml
+  - 05-dns-pihole-1.yml
+  - 05-dns-pihole-2.yml
+  - 05-lab-pdns-mysql.yml
+  - 10-lab-ns-1.yml
+  - 10-lab-ns-2.yml
+  - 99-kubernetes-dashboard.yml
   #- dns-core-1.yml
   #- dns-core-2.yml
-  - lab-ns-1.yml
-  - lab-ns-2.yml
-  - dns-pihole-1.yml
-  - dns-pihole-2.yml
-  - system-glue.yml
   #- metallb-operator.yml
   #- metallb-instance.yml

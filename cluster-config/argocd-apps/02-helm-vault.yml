@@ -2,28 +2,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-ingress
+  name: vault
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
-    namespace: 'nginx-ingress'
+    namespace: 'vault'
     server: https://kubernetes.default.svc
   project: local-cluster
   sources:
-    - chart: nginx-ingress
+    - chart: vault
       helm:
         valueFiles:
-          - $values/cluster-config/helm-values/nginx-ingress.yml
-      repoURL: 'https://helm.nginx.com/stable'
-      targetRevision: 1.0.2
+          - $values/cluster-config/helm-values/vault.yml
+      repoURL: 'https://helm.releases.hashicorp.com'
+      targetRevision: 0.27.0
     - ref: values
       repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
   syncPolicy:
     automated:
       allowEmpty: true
-      # prune: true
+      # prune: false
     syncOptions:
       - CreateNamespace=true

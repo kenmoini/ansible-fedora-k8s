@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  destination:
+    namespace: 'nginx-ingress'
+    server: https://kubernetes.default.svc
+  project: local-cluster
+  sources:
+    - chart: nginx-ingress
+      helm:
+        valueFiles:
+          - $values/cluster-config/helm-values/nginx-ingress.yml
+      repoURL: 'https://helm.nginx.com/stable'
+      targetRevision: 1.0.2
+    - ref: values
+      repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      # prune: true
+    syncOptions:
+      - CreateNamespace=true

@@ -2,16 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: lab-ns-2
+  name: system-glue
+  namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
   sources:
-    - repoURL: 'https://github.com/kenmoini/lab-powerdns'
+    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
-      path: deployment/overlays/ns-2/
+      path: lab-applications/system-glue/base/
       #directory:
       #  recurse: true
       kustomize:

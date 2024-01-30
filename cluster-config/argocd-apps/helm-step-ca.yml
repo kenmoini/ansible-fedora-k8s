@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: step-ca
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  destination:
+    namespace: 'step-ca'
+    server: https://kubernetes.default.svc
+  project: local-cluster
+  sources:
+    - chart: step-certificates
+      helm:
+        valueFiles:
+          - $values/cluster-config/helm-values/stepca.yml
+      repoURL: 'https://smallstep.github.io/helm-charts/'
+      targetRevision: 1.25.0
+    - ref: values
+      repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      # prune: false
+    syncOptions:
+      - CreateNamespace=true
