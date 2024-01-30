@@ -3,6 +3,7 @@ ingress:
   ingressClassName: nginx
   host: longhorn.apps.k8s.kemo.labs
 
+# https://github.com/longhorn/longhorn/issues/6415
 helmPreUpgradeCheckerJob:
   enabled: false
 
