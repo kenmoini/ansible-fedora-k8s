@@ -1,0 +1,31 @@
+
+injector:
+  # True if you want to enable vault agent injection.
+  # @default: global.enabled
+  enabled: false
+
+server:
+  enabled: true
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - host: vault.apps.k8s.kemo.labs
+        paths:
+          - path: /
+            pathType: Prefix
+
+  dataStorage:
+    enabled: true
+    size: 5Gi
+    storageClass: bulk-ssd
+
+ui:
+  enabled: true
