@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ingress-vault.yml
+
+# kubectl exec -n vault --stdin=true --tty=true vault-0 -- vault operator init
+# kubectl exec -n vault --stdin=true --tty=true vault-0 -- vault operator unseal $KEY1
+# kubectl exec -n vault --stdin=true --tty=true vault-0 -- vault operator unseal $KEY2
+# kubectl exec -n vault --stdin=true --tty=true vault-0 -- vault operator unseal $KEY3

@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-vault-ui
+  namespace: vault
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: vault-ui.apps.k8s.kemo.labs
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: vault-ui
+            port:
+              number: 8200
