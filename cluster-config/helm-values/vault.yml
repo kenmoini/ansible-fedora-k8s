@@ -19,7 +19,7 @@ server:
     hosts:
       - host: vault.apps.k8s.kemo.labs
         paths:
-          - path: /
+          - path: "/"
             pathType: Prefix
             backend:
               service:
