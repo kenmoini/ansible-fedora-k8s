@@ -18,14 +18,14 @@ server:
     ingressClassName: nginx
     hosts:
       - host: vault.apps.k8s.kemo.labs
-        paths:
-          - path: "/"
-            pathType: Prefix
-            backend:
-              service:
-                name: vault
-                port:
-                  number: 8200
+        #paths:
+        #  - path: "/"
+        #    pathType: Prefix
+        #    backend:
+        #      service:
+        #        name: vault
+        #        port:
+        #          number: 8200
 
   dataStorage:
     enabled: true
