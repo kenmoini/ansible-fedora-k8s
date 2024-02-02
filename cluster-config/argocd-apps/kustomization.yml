@@ -15,6 +15,7 @@ resources:
   - 05-lab-pdns-mysql.yml
   - 10-lab-ns-1.yml
   - 10-lab-ns-2.yml
+  - 20-lego-bridge.yml
   - 99-kubernetes-dashboard.yml
   #- dns-core-1.yml
   #- dns-core-2.yml
