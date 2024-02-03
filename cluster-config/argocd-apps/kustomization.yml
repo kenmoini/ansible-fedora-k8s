@@ -17,6 +17,7 @@ resources:
   - 10-lab-ns-2.yml
   - 20-lego-bridge.yml
   - 99-kubernetes-dashboard.yml
+  - 99-site-kemo-labs.yml
   #- dns-core-1.yml
   #- dns-core-2.yml
   #- metallb-operator.yml
