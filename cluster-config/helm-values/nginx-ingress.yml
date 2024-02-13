@@ -93,6 +93,8 @@ controller:
   #  configMap:
   #    name: trusted-ca
   #    defaultMode: 420
+  wildcardTLS:
+    secret: nginx-ingress/wildcard-tls
 prometheus:
   create: true
   port: 9113

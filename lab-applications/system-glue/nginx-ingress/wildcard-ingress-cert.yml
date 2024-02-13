@@ -1,0 +1,27 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-tls
+  namespace: nginx-ingress
+spec:
+  # The secret name to store the signed certificate
+  secretName: wildcard-tls
+  # Common Name
+  commonName: *.apps.k8s.kemo.labs
+  # DNS SAN
+  dnsNames:
+    - "*.apps.k8s.kemo.labs"
+    - "*.kemo.labs"
+  # IP Address SAN
+  #ipAddresses:
+  #  - "127.0.0.1"
+  # Duration of the certificate
+  duration: 744h
+  # Renew 8 hours before the certificate expiration
+  renewBefore: 48h
+  # The reference to the step issuer
+  issuerRef:
+    group: certmanager.step.sm
+    kind: StepClusterIssuer
+    name: step-issuer
