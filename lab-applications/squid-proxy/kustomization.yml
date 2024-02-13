@@ -9,6 +9,6 @@ resources:
   - 02-configmap.yml
   - 03-external-secrets.yml
   - 04-deployment.yml
-  #- 05-logrotate-rbac.yml
-  #- 06-logrotate-cronjob.yml
+  - 05-logrotate-rbac.yml
+  - 06-logrotate-cronjob.yml
   - 07-service.yml
