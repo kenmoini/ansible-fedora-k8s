@@ -20,6 +20,8 @@ inject:
 ingress:
   enabled: true
   ingressClassName: "nginx"
+  annotations:
+    nginx.org/ssl-services: "step-ca-step-certificates"
   tls:
     - hosts:
       - "stepca.kemo.labs"
