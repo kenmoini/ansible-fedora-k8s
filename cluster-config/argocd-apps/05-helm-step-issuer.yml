@@ -17,7 +17,7 @@ spec:
         valueFiles:
           - $values/cluster-config/helm-values/step-issuer.yml
       repoURL: 'https://smallstep.github.io/helm-charts/'
-      targetRevision: 1.25.0
+      targetRevision: 1.8.0
     - ref: values
       repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
