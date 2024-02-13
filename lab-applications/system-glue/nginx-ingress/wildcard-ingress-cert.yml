@@ -17,9 +17,9 @@ spec:
   #ipAddresses:
   #  - "127.0.0.1"
   # Duration of the certificate
-  duration: 744h
+  duration: 744h0m0s
   # Renew 8 hours before the certificate expiration
-  renewBefore: 48h
+  renewBefore: 48h0m0s
   # The reference to the step issuer
   issuerRef:
     group: certmanager.step.sm
