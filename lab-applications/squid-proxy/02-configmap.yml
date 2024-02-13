@@ -68,7 +68,7 @@ data:
   10_listening.conf: |
     # SSL MitM config
     http_port 3128 ssl-bump \
-      cert=/etc/squid/certs/squid-ca.pem \
+      cert=/etc/squid/private/squid-ca.pem \
       generate-host-certificates=on dynamic_cert_mem_cache_size=16MB
 
     # no SSL MitM

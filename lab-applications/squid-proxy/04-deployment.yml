@@ -34,9 +34,10 @@ spec:
             - name: squid-config
               mountPath: /etc/squid/conf.d
             - name: squid-certs
-              mountPath: /etc/squid/certs
+              mountPath: /etc/squid/private
             - name: squid-db
-              mountPath: /etc/squid/db
+              mountPath: /etc/squid/certs
+              #mountPath: /etc/squid/db
             - name: squid-logs
               mountPath: /var/log/squid
             - name: squid-cache
