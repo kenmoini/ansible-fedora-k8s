@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: squid-proxy
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    metallb.universe.tf/loadBalancerIPs: 192.168.42.31
+    metallb.universe.tf/address-pool: lab-pool
+    metallb.universe.tf/allow-shared-ip: "key-to-share-192.168.42.31"
+  labels:
+    app: squid-proxy
+spec:
+  ports:
+    - port: 3128
+      protocol: TCP
+      targetPort: 3128
+      name: ssl-mitm-tcp
+    - port: 3129
+      protocol: TCP
+      targetPort: 3129
+      name: non-ssl-mitm-tcp
+  selector:
+    app: squid-proxy
+  type: LoadBalancer
