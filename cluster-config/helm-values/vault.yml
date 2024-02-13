@@ -16,6 +16,9 @@ server:
   ingress:
     enabled: true
     ingressClassName: nginx
+    tls:
+      - hosts:
+          - vault.apps.k8s.kemo.labs
     hosts:
       - host: vault.apps.k8s.kemo.labs
         #paths:
