@@ -4,15 +4,15 @@ kind: Ingress
 metadata:
   name: ingress-vault-ui
   namespace: vault
-  annotations:
-    cert-manager.io/cluster-issuer: internal-step-ca-acme
-    acme.cert-manager.io/http01-ingress-class: nginx
+  #annotations:
+    #cert-manager.io/cluster-issuer: internal-step-ca-acme
+    #acme.cert-manager.io/http01-ingress-class: nginx
 spec:
   ingressClassName: nginx
-  tls:
-    - hosts:
-        - vault.apps.k8s.kemo.labs
-      secretName: vault-ingress-cert
+  #tls:
+  #  - hosts:
+  #      - vault.apps.k8s.kemo.labs
+  #    secretName: vault-ingress-cert
   rules:
     - host: vault-ui.apps.k8s.kemo.labs
       http:
