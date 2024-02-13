@@ -9,9 +9,9 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
   sources:
-    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+    - repoURL: 'https://github.com/kenmoini/lab-squid-proxy'
       targetRevision: main
-      path: lab-applications/squid-proxy/
+      path: deployment/
       #directory:
       #  recurse: true
       kustomize:
