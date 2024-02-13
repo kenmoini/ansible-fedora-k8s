@@ -1,0 +1,22 @@
+# helm values.yaml
+---
+existingSecrets:
+  enabled: true
+  ca: true
+  issuer: true
+  certsAsSecret: true
+  configAsSecret: true
+  sshHostCa: true
+  sshUserCa: true
+
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
