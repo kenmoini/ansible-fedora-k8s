@@ -81,7 +81,7 @@ controller:
     #memory: 0
   dnsPolicy: ClusterFirst
   enableExternalDNS: false
-  enableTLSPassthrough: true
+  #enableTLSPassthrough: true
   enableOIDC: false
   healthStatusURI: /nginx-health
   #volumeMounts:
