@@ -11,6 +11,8 @@ spec:
   selector:
     matchLabels:
       app: squid-proxy
+  strategy:
+    type: Recreate
   replicas: 1
   template:
     metadata:
