@@ -41,7 +41,7 @@ resources:
 extraVolumes:
   - name: step-ca-step-certificates-templates
     secret:
-      name: step-ca-step-certificates-templates
+      secretName: step-ca-step-certificates-templates
 extraVolumeMounts:
   - name: step-ca-step-certificates-templates
     mountPath: /home/step/templates/ssh/
