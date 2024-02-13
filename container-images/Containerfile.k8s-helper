@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/ubi9/ubi:9.3-1361.1699548029
 
 USER 0
 
-RUN dnf install -y jq net-tools nmap-ncat curl wget && \
+RUN dnf install -y jq net-tools nmap-ncat curl-minimal wget && \
     dnf clean all && \
     rm -rf /var/cache/dnf
 
