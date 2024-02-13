@@ -7,7 +7,6 @@ namespace: argocd
 resources:
   - system-operators.yml
   - 00-helm-longhorn.yml
-  - 00-helm-nginx-ingress.yml
   - 01-system-glue.yml
   - 02-helm-vault.yml
   - 03-helm-external-secrets.yml
@@ -15,6 +14,7 @@ resources:
   - 05-helm-step-issuer.yml
   - 05-lab-pdns-mysql.yml
   #- 05-helm-cert-manager-pdns.yml
+  - 06-helm-nginx-ingress.yml
   - 06-dns-pihole-1.yml
   - 06-dns-pihole-2.yml
   - 10-lab-ns-1.yml
