@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: squid-log-rotate
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   schedule: "0 0 * * *" # Run every day at midnight
   concurrencyPolicy: Forbid
