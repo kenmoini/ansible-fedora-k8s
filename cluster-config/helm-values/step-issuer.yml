@@ -1,0 +1,5 @@
+
+certManager:
+  serviceAccount:
+    name: operators
+    namespace: cert-manager

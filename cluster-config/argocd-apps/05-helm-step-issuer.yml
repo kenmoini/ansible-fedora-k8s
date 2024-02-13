@@ -1,0 +1,34 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: step-issuer
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  destination:
+    namespace: 'step-ca'
+    server: https://kubernetes.default.svc
+  project: local-cluster
+  sources:
+    - chart: step-issuer
+      helm:
+        valueFiles:
+          - $values/cluster-config/helm-values/step-issuer.yml
+      repoURL: 'https://smallstep.github.io/helm-charts/'
+      targetRevision: 1.25.0
+    - ref: values
+      repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+    - repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
+      targetRevision: main
+      path: lab-applications/step-issuer/
+      kustomize:
+        version: v5.1.0
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      # prune: false
+    syncOptions:
+      - CreateNamespace=true
