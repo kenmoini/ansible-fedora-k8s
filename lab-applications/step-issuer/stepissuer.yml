@@ -14,4 +14,5 @@ spec:
     kid: 5eudmRZDrL7zuLW1zw3mSJonhE5_wbc76h3lgk0kk50
     passwordRef:
       name: step-ca-step-certificates-provisioner-password
+      namespace: step-ca
       key: password
