@@ -81,7 +81,7 @@ controller:
     #memory: 0
   dnsPolicy: ClusterFirst
   enableExternalDNS: false
-  enableTLSPassthrough: false
+  enableTLSPassthrough: true
   enableOIDC: false
   healthStatusURI: /nginx-health
   #volumeMounts:
@@ -94,6 +94,8 @@ controller:
   #    name: trusted-ca
   #    defaultMode: 420
   wildcardTLS:
+    secret: nginx-ingress/wildcard-tls
+  defaultTLS:
     secret: nginx-ingress/wildcard-tls
 prometheus:
   create: true
