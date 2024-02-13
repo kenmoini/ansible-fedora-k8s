@@ -1,0 +1,18 @@
+FROM registry.access.redhat.com/ubi9/ubi:9.3-1361.1699548029
+
+USER 0
+
+RUN dnf install -y jq net-tools nmap-ncat curl wget && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
+
+RUN ARCH=$(uname -m) \
+    && OS=$(uname -s | tr '[:upper:]' '[:lower:]') \
+    && if [ "$ARCH" = "arm64" ]; then ARCH="aarch64"; fi \
+    && if [ "$OS" = "darwin" ]; then OS="mac"; fi \
+    && wget -O /tmp/ocp.tar.gz https://mirror.openshift.com/pub/openshift-v4/${ARCH}/clients/ocp/stable/openshift-client-${OS}.tar.gz \
+    && tar -zxvf /tmp/ocp.tar.gz -C /usr/local/bin/ oc kubectl \
+    && chmod a+x /usr/local/bin/oc /usr/local/bin/kubectl \
+    && rm -f /tmp/ocp.tar.gz /tmp/README.md
+
+USER 1001
