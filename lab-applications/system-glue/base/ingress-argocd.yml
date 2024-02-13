@@ -4,8 +4,13 @@ kind: Ingress
 metadata:
   name: ingress-argocd
   namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - argocd.apps.k8s.kemo.labs
   rules:
     - host: argocd.apps.k8s.kemo.labs
       http:
