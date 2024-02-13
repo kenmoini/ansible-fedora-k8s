@@ -11,7 +11,7 @@ resources:
   - 01-system-glue.yml
   - 02-helm-vault.yml
   - 03-helm-external-secrets.yml
-  #- 04-helm-step-ca.yml
+  - 04-helm-step-ca.yml
   - 05-dns-pihole-1.yml
   - 05-dns-pihole-2.yml
   - 05-lab-pdns-mysql.yml
