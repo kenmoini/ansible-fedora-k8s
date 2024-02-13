@@ -3,3 +3,7 @@ certManager:
   serviceAccount:
     name: operators
     namespace: cert-manager
+
+deployment:
+  args:
+    disableApprovalCheck: true
