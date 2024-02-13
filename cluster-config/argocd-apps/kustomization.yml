@@ -12,9 +12,10 @@ resources:
   - 02-helm-vault.yml
   - 03-helm-external-secrets.yml
   - 04-helm-step-ca.yml
-  - 05-dns-pihole-1.yml
-  - 05-dns-pihole-2.yml
   - 05-lab-pdns-mysql.yml
+  - 05-helm-cert-manager-pdns.yml
+  - 06-dns-pihole-1.yml
+  - 06-dns-pihole-2.yml
   - 10-lab-ns-1.yml
   - 10-lab-ns-2.yml
   - 20-lego-bridge.yml
