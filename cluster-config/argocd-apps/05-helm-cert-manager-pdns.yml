@@ -17,7 +17,7 @@ spec:
         valueFiles:
           - $values/cluster-config/helm-values/cert-manager-pdns.yml
       repoURL: 'https://zachomedia.github.io/cert-manager-webhook-pdns'
-      targetRevision: v2.5.0
+      targetRevision: 3.1.2
     - ref: values
       repoURL: 'https://github.com/kenmoini/ansible-fedora-k8s'
       targetRevision: main
