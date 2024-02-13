@@ -1,8 +1,8 @@
 
 certManager:
   serviceAccount:
-    name: operators
-    namespace: cert-manager
+    name: cert-manager
+    namespace: operators
 
 deployment:
   args:
