@@ -9,6 +9,14 @@ existingSecrets:
   sshHostCa: true
   sshUserCa: true
 
+bootstrap:
+  secrets: false
+  enabled: false
+  configmaps: false
+
+inject:
+  enabled: false
+
 ingress:
   enabled: true
   ingressClassName: "nginx"
