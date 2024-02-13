@@ -20,6 +20,11 @@ inject:
 ingress:
   enabled: true
   ingressClassName: "nginx"
+  tls:
+    - hosts:
+      - "stepca.kemo.labs"
+    - hosts:
+      - "stepca.apps.k8s.kemo.labs"
   hosts:
   - host: "stepca.kemo.labs"
     paths:
