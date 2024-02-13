@@ -84,7 +84,7 @@ data:
     always_direct allow all
     #acl broken_sites dstdomain .github.com
 
-    sslcrtd_program /usr/lib64/squid/security_file_certgen -s /etc/squid/db/ssl_db -M 64MB
+    sslcrtd_program /usr/lib64/squid/security_file_certgen -s /etc/squid/certs/ssl_db -M 64MB
 
     sslproxy_cert_error allow all
     tls_outgoing_options flags=DONT_VERIFY_PEER
