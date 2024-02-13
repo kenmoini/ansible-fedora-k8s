@@ -1,2 +1,5 @@
 
 groupName: acme.kemo.labs
+
+certManager:
+  namespace: operators

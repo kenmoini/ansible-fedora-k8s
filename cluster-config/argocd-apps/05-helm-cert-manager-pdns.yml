@@ -8,7 +8,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
-    namespace: 'step-ca'
+    namespace: 'cert-manager'
     server: https://kubernetes.default.svc
   project: local-cluster
   sources:
