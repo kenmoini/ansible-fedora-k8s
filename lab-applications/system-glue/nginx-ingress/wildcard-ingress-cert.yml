@@ -8,7 +8,7 @@ spec:
   # The secret name to store the signed certificate
   secretName: wildcard-tls
   # Common Name
-  commonName: *.apps.k8s.kemo.labs
+  commonName: "*.apps.k8s.kemo.labs"
   # DNS SAN
   dnsNames:
     - "*.apps.k8s.kemo.labs"
