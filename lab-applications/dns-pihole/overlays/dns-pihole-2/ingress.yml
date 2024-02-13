@@ -8,6 +8,9 @@ metadata:
     service: dns-pihole
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - pihole-2.apps.k8s.kemo.labs
   rules:
   - host: pihole-2.apps.k8s.kemo.labs
     http:
