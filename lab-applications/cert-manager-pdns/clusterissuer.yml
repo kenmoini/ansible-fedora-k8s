@@ -9,9 +9,9 @@ spec:
   acme:
     email: ken@kenmoini.com
     server: https://step-ca-step-certificates.step-ca.svc.cluster.local/acme/acme/directory
+    skipTLSVerify: true
     privateKeySecretRef:
       name: step-ca-pdns-webhook-account-key
-    skipTLSVerify: true
     solvers:
       - dns01:
           webhook:
