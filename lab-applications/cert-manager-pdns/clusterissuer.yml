@@ -3,12 +3,15 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: step-ca-pdns-webhook
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   acme:
     email: ken@kenmoini.com
     server: https://step-ca-step-certificates.step-ca.svc.cluster.local/acme/acme/directory
     privateKeySecretRef:
       name: step-ca-pdns-webhook-account-key
+    skipTLSVerify: true
     solvers:
       - dns01:
           webhook:

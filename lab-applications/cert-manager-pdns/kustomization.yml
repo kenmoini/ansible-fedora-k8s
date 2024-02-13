@@ -4,3 +4,4 @@ kind: Kustomization
 
 resources:
   - clusterissuer.yml
+  - apikey.yml
