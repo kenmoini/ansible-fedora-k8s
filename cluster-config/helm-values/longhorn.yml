@@ -2,6 +2,8 @@ ingress:
   enabled: true
   ingressClassName: nginx
   host: longhorn.apps.k8s.kemo.labs
+  tlsSecret: ""
+  tls: true
 
 # https://github.com/longhorn/longhorn/issues/6415
 helmPreUpgradeCheckerJob:
