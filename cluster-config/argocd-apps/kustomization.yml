@@ -21,7 +21,7 @@ resources:
   - 10-lab-ns-2.yml
   - 20-lego-bridge.yml
   - 50-squid-proxy.yml
-  #- 50-openvpn-server.yml
+  - 50-openvpn-server.yml
   - 99-kubernetes-dashboard.yml
   - 99-site-kemo-labs.yml
   #- dns-core-1.yml
