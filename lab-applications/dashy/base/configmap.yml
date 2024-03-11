@@ -1,0 +1,214 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashy-config
+data:
+  conf.yml: |
+    # podman run -d --restart=always -p 8081:80 -v /opt/caas/dashy/dashy-config.yml:/app/public/conf.yml:Z -e NODE_EXTRA_CA_CERTS=/app/certs/ca-certificates.crt -v /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem:/app/certs/ca-certificates.crt:roZ --name dashy docker.io/lissy93/dashy:latest
+    pageInfo:
+      title: Kemo Labs
+      description: ''
+      navLinks: []
+      footerText: ''
+    appConfig:
+      layout: horizontal
+      iconSize: medium
+      theme: basic
+      startingView: default
+      defaultOpeningMethod: newtab
+      statusCheck: true
+      statusCheckInterval: 30
+      language: en
+      faviconApi: local
+      routingMode: history
+      enableMultiTasking: false
+      widgetsAlwaysUseProxy: false
+      webSearch:
+        disableWebSearch: false
+        searchEngine: duckduckgo
+        openingMethod: newtab
+        searchBangs: {}
+      enableFontAwesome: true
+      enableMaterialDesignIcons: false
+      hideComponents:
+        hideHeading: false
+        hideNav: false
+        hideSearch: false
+        hideSettings: false
+        hideFooter: false
+      auth:
+        enableGuestAccess: false
+        users: []
+        enableKeycloak: false
+      showSplashScreen: false
+      preventWriteToDisk: false
+      preventLocalSave: true
+      disableConfiguration: false
+      disableConfigurationForNonAdmin: false
+      allowConfigEdit: false
+      enableServiceWorker: false
+      disableContextMenu: false
+      disableUpdateChecks: false
+      disableSmartSort: false
+      enableErrorReporting: false
+    sections: # An array of sections
+    - name: OOBM
+      icon: far fa-rocket
+      items:
+      - title: raza
+        description: Core Lab Server
+        icon: favicon
+        url: https://raza.mgmt.kemo.labs
+      - title: serenity
+        description: Dell R730 iDRAC
+        icon: favicon
+        url: https://serenity.mgmt.kemo.labs
+      - title: suki
+        description: EPYC Server upstairs
+        icon: favicon
+        url: https://suki.mgmt.kemo.labs
+      - title: endurance
+        description: EPYC server with bulk compute resources
+        icon: favicon
+        url: https://endurance.mgmt.kemo.labs
+
+    - name: Cockpit
+      icon: far fa-rocket
+      items:
+      - title: raza
+        description: Core Lab Server
+        icon: favicon
+        url: https://raza.kemo.labs:9090/
+      - title: suki
+        description: EPYC Server in the living room
+        icon: favicon
+        url: https://suki.kemo.labs:9090/
+      - title: endurance
+        description: EPYC server with bulk compute resources
+        icon: favicon
+        url: https://endurance.kemo.labs:9090/
+      - title: serenity
+        description: R730, may not be running RHEL
+        icon: favicon
+        url: https://serenity.kemo.labs:9090/
+      - title: IDM
+        description: Red Hat Identity Management
+        icon: favicon
+        url: https://idm.kemo.labs:9090/
+      - title: Plex
+        description: Plex Media Server
+        icon: favicon
+        url: https://plex.kemo.labs:9090/
+
+    - name: Identity Services
+      items:
+      - title: FreeIPA/Red Hat IDM
+        icon: favicon
+        url: https://idm.kemo.labs/
+      - title: Keycloak SSO
+        icon: favicon
+        url: https://sso.kemo.labs/
+
+    - name: Media Services
+      items:
+      - title: Sonarr TV
+        icon: favicon
+        url: https://sonarr.kemo.labs/
+      - title: Radarr Movies
+        icon: favicon
+        url: https://radarr.kemo.labs/
+      - title: Bazarr Subtitles
+        icon: favicon
+        url: https://bazarr.kemo.labs/
+      - title: Plex (External)
+        icon: favicon
+        url: https://app.plex.tv/desktop/
+      - title: Plex (Internal)
+        icon: favicon
+        url: https://plex.kemo.labs:32400/web/
+      - title: Deluge
+        icon: favicon
+        url: https://deluge-web.kemo.labs/
+      - title: Overseerr
+        icon: favicon
+        url: https://overseerr.kemo.labs/
+      - title: Tautilli
+        icon: favicon
+        url: https://tautulli.kemo.labs/
+      - title: Jackett
+        icon: favicon
+        url: https://jackett.kemo.labs/
+
+
+    - name: Lab Services
+      items:
+      - title: Kemo Labs Primer
+        icon: favicon
+        url: https://kemo.labs/
+
+      - title: Metrics Stack (Grafana)
+        icon: favicon
+        url: https://grafana.kemo.labs/
+
+      - title: Ansible Tower
+        icon: favicon
+        url: https://tower.kemo.labs/
+
+      - title: Core OpenShift Cluster
+        icon: favicon
+        url: https://console-openshift-console.apps.core-ocp.d70.lab.kemo.network/
+
+    - name: Network Services
+      items:
+      - title: Unifi UI
+        icon: favicon
+        url: https://unifi.ui.com/
+        statusCheck: false
+
+      - title: Pi-Hole 1
+        icon: favicon
+        url: https://pihole-1.apps.k8s.kemo.labs/admin
+      - title: Pi-Hole 2
+        icon: favicon
+        url: https://pihole-2.apps.k8s.kemo.labs/admin
+
+      - title: PDNS Dashboard 1
+        icon: favicon
+        url: https://ns1.apps.k8s.kemo.labs/
+      - title: PDNS Dashboard 2
+        icon: favicon
+        url: https://ns2.apps.k8s.kemo.labs/
+
+      - title: PDNS API 1
+        icon: favicon
+        url: https://ns1-api.apps.k8s.kemo.labs/
+      - title: PDNS API 2
+        icon: favicon
+        url: https://ns2-api.apps.k8s.kemo.labs/
+
+    - name: Container Image Registries
+      items:
+      - title: Nexus
+        icon: favicon
+        url: https://nexus.kemo.labs/
+      - title: Quay
+        icon: favicon
+        url: https://quay.kemo.labs/
+      - title: Harbor
+        icon: favicon
+        url: https://harbor.kemo.labs/
+      - title: Artifactory
+        icon: favicon
+        url: https://artifactory.kemo.labs/
+
+    - name: Tools
+      items:
+      - title: HackMD
+        icon: favicon
+        url: https://www.hackmd.com/
+        statusCheck: false
+      - title: GitHub
+        icon: favicon
+        url: https://www.github.com/
+        statusCheck: false
