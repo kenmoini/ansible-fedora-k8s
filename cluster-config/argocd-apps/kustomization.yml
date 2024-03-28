@@ -19,6 +19,7 @@ resources:
   - 06-dns-pihole-2.yml
   - 10-lab-ns-1.yml
   - 10-lab-ns-2.yml
+  - 15-phpipam.yml
   - 20-lego-bridge.yml
   - 50-squid-proxy.yml
   #- 50-openvpn-server.yml
