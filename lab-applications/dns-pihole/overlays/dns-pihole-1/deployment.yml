@@ -57,6 +57,8 @@ spec:
           env:
             - name: ServerIP
               value: 192.168.42.11
+            - name: FTLCONF_LOCAL_IPV4
+              value: 192.168.42.11
             - name: VIRTUAL_HOST
               valueFrom:
                 fieldRef:
